@@ -52,10 +52,11 @@ END_MESSAGE_MAP()
 
 typedef char*(PASCAL *lpgetCamera)();
 typedef char*(PASCAL *lpopenCamera)(HWND,int ,int ,int );
+typedef char*(PASCAL *lpcloseCamera)();
 
 lpgetCamera getCamera;
 lpopenCamera  openCamera;
-
+lpcloseCamera closeCamera;
 
 HINSTANCE dllHandle_Cam;
 
@@ -66,7 +67,8 @@ int init_Cam(string fileName)
 	{
 		getCamera = (lpgetCamera)GetProcAddress(dllHandle_Cam, "getCamera");
 		openCamera = (lpopenCamera)GetProcAddress(dllHandle_Cam, "openCamera");
-		if (getCamera != NULL || openCamera != NULL)
+		closeCamera = (lpcloseCamera)GetProcAddress(dllHandle_Cam, "closeCamera");
+		if (getCamera != NULL || openCamera != NULL || closeCamera != NULL)
 		{
 			return 0;
 		}
@@ -89,6 +91,7 @@ CCamera_MFCDlg::CCamera_MFCDlg(CWnd* pParent /*=NULL*/)
 void CCamera_MFCDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PIC, m_pic);
 }
 
 BEGIN_MESSAGE_MAP(CCamera_MFCDlg, CDialogEx)
@@ -96,6 +99,9 @@ BEGIN_MESSAGE_MAP(CCamera_MFCDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_OPENCAMERA, &CCamera_MFCDlg::OnBnClickedOpencamera)
+	ON_BN_CLICKED(IDC_CLOSECAMERA, &CCamera_MFCDlg::OnBnClickedClosecamera)
+	ON_WM_CLOSE()
+	ON_BN_CLICKED(IDC_CREATEIMAGE, &CCamera_MFCDlg::OnBnClickedCreateimage)
 END_MESSAGE_MAP()
 
 
@@ -131,7 +137,7 @@ BOOL CCamera_MFCDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO:  在此添加额外的初始化代码
-
+	init_Cam("Camera_DLL.dll");
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -196,8 +202,33 @@ void CCamera_MFCDlg::OnBnClickedOpencamera()
 		{
 			return;
 		}
-		openCamera(this->GetSafeHwnd(),600,400,1);
-
+		openCamera(m_pic.GetSafeHwnd(),640,480,1);
 	}
 	
+}
+
+
+void CCamera_MFCDlg::OnBnClickedClosecamera()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	if (init_Cam("Camera_DLL.dll") == 0)
+	{
+		closeCamera();
+	}
+
+
+}
+
+
+void CCamera_MFCDlg::OnClose()
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	closeCamera();
+	CDialogEx::OnClose();
+}
+
+
+void CCamera_MFCDlg::OnBnClickedCreateimage()
+{
+	// TODO:  在此添加控件通知处理程序代码
 }

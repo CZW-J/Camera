@@ -44,8 +44,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\DirectShow\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);..\DirectShow\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\DirectShow\Include;..\OpenCV\include;..\OpenCV\include\opencv;..\OpenCV\include\opencv2;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);..\DirectShow\Lib;..\OpenCV\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -76,7 +76,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>.\Camera_DLL.def</ModuleDefinitionFile>
-      <AdditionalDependencies>strmiids.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>strmiids.lib;opencv_aruco310.lib;opencv_bgsegm310.lib;opencv_bioinspired310.lib;opencv_calib3d310.lib;opencv_ccalib310.lib;opencv_core310.lib;opencv_datasets310.lib;opencv_dnn310.lib;opencv_dpm310.lib;opencv_face310.lib;opencv_features2d310.lib;opencv_flann310.lib;opencv_fuzzy310.lib;opencv_highgui310.lib;opencv_imgcodecs310.lib;opencv_imgproc310.lib;opencv_line_descriptor310.lib;opencv_ml310.lib;opencv_objdetect310.lib;opencv_optflow310.lib;opencv_photo310.lib;opencv_plot310.lib;opencv_reg310.lib;opencv_rgbd310.lib;opencv_saliency310.lib;opencv_shape310.lib;opencv_stereo310.lib;opencv_stitching310.lib;opencv_structured_light310.lib;opencv_superres310.lib;opencv_surface_matching310.lib;opencv_text310.lib;opencv_tracking310.lib;opencv_video310.lib;opencv_videoio310.lib;opencv_videostab310.lib;opencv_xfeatures2d310.lib;opencv_ximgproc310.lib;opencv_xobjdetect310.lib;opencv_xphoto310.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="CameraProcessing.h" />
     <ClInclude Include="Camera_DLL.h" />
+    <ClInclude Include="SampleGrabberCallback.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -99,6 +100,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SampleGrabberCallback.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

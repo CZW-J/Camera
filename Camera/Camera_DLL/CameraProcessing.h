@@ -3,15 +3,9 @@
 #ifndef __CAMERAPROCESSING_H__
 #define  __CAMERAPROCESSING_H__
 
-#include <Windows.h> 
-//#include <tchar.h>
-#include <atlbase.h>
-#include <dshow.h> 
-#include <qedit.h>
-#include <atlcom.h>
-#include <atlctl.h>
-#include <atlbase.h>  
-#include <control.h>
+
+
+#include "SampleGrabberCallback.h"
 
 typedef struct _DeviceCam
 {
@@ -39,6 +33,12 @@ public:
 
 	bool isOpened();
 
+	int setCamDisplay(int w, int h, int iFormat);
+
+	int previewCam(HWND hwnd);
+
+
+	SampleGrabberCallback *m_SampleGrabberCB;
 private:
 	CComPtr<IMediaControl>m_pMC = NULL;				// 媒体控制接口  
 	CComPtr<ICaptureGraphBuilder2>m_pCapGB = NULL;    // 增强型捕获滤波器链表管理  

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "afxwin.h"
 
 // CCamera_MFCDlg ¶Ô»°¿ò
 class CCamera_MFCDlg : public CDialogEx
@@ -30,4 +31,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedOpencamera();
+	afx_msg void OnBnClickedClosecamera();
+	CStatic m_pic;
+	afx_msg void OnClose();
+	afx_msg void OnBnClickedCreateimage();
 };

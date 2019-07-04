@@ -34,11 +34,22 @@ char* WINAPI getCamera()
 
 char* WINAPI openCamera(HWND winHwnd ,int resolutionX,int resolutionY,int device)
 {
-	cameraProcessing.openCam(device);
+	if (0 != cameraProcessing.openCam(device))
+	{
+		sprintf(g_buf, "ÉãÏñÍ·¿ªÆôÊ§°Ü");
+		return g_buf;
+	}
+	cameraProcessing.setCamDisplay(resolutionX, resolutionY, device);
+	cameraProcessing.previewCam(winHwnd);
+	
 	return 0;
 }
 
 char* WINAPI closeCamera()
 {
+	if (cameraProcessing.isOpened() == true)
+	{
+		cameraProcessing.stopCam();
+	}
 	return 0;
 }
